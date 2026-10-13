@@ -272,6 +272,19 @@
       <div class="big sub"><small>2인 총 판매가</small><strong id="r-total">-</strong></div>
       <div class="alert" id="alert"></div>
       <p class="note">성인 2인 기준입니다. 2인 총액 = 반올림된 1인가 × 2.</p>
+      <details class="more" style="margin-top:12px">
+        <summary><b>고객용 견적 링크 만들기</b></summary>
+        <div class="fld"><label>호텔명</label><input type="text" id="c-hotel" placeholder="예: 쉐라톤 와이키키" style="text-align:left"></div>
+        <div class="fld"><label>객실</label><input type="text" id="c-room" placeholder="예: City View" style="text-align:left"></div>
+        <div class="grid2">
+          <div class="fld"><label>숙박(박)</label><input type="text" inputmode="numeric" id="c-nights" placeholder="4"></div>
+          <div class="fld"><label>환율 기준일</label><input type="text" id="c-fxd" placeholder="2026.10.13" style="text-align:left"></div>
+        </div>
+        <div class="fld"><label>여행기간</label><input type="text" id="c-dates" placeholder="예: 2026.11.10 ~ 11.15" style="text-align:left"></div>
+        <button type="button" class="primary" id="mklink" style="width:100%">고객용 링크 복사</button>
+        <p class="note">링크에는 <b>최종 1인가·할인·호텔 정보만</b> 담깁니다. 마크업·사은품·원가는 포함되지 않습니다. 링크를 만든 뒤 고객용 화면을 한 번 열어 금액을 확인하세요.</p>
+        <p class="note" id="linkout" style="word-break:break-all"></p>
+      </details>
     </div>
   </div>
 </section>
@@ -426,6 +439,21 @@
       '1인 최종 판매가 ' + won(r.per) + ' / 2인 총액 ' + won(r.total);
     var done = function () { $('copy').textContent = '복사 완료'; setTimeout(function () { $('copy').textContent = '결과 복사'; }, 1500); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+    else done();
+  });
+
+  $('mklink').addEventListener('click', function () {
+    var v = read(), r = calc(v);
+    var u = new URL('hawaii-honeymoon-quote.html', location.href);
+    u.searchParams.set('p', r.per);
+    if (v.disc > 0) u.searchParams.set('x', v.disc);
+    [['h','c-hotel'],['r','c-room'],['n','c-nights'],['d','c-dates'],['f','c-fxd']].forEach(function (m) {
+      var val = $(m[1]).value.trim();
+      if (val) u.searchParams.set(m[0], val);
+    });
+    $('linkout').textContent = u.href;
+    var done = function () { $('mklink').textContent = '링크 복사 완료'; setTimeout(function () { $('mklink').textContent = '고객용 링크 복사'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u.href).then(done, function () {});
     else done();
   });
 
