@@ -70,6 +70,15 @@
   .fld label i { font-style: normal; font-weight: 400; color: var(--mute); font-size: 12px; margin-left: 4px; }
   .fld input[type=text] { width: 100%; padding: 11px 12px; font-size: 16px; border: 1.5px solid var(--line); border-radius: 10px; text-align: right; background: #fff; }
   .fld input:focus { outline: none; border-color: var(--gold); }
+  .fld select, .fld input[type=date] { width: 100%; padding: 10px 10px; font-size: 15px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; font-family: inherit; }
+  .rates { background: #f6faff; border: 1px solid #cfe0fb; border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+  .rates h3 { margin: 0 0 4px; font-size: 15px; color: var(--usd); }
+  .rates .nightrow { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; border-bottom: 1px dashed #d8e5fb; }
+  .msg { font-size: 13px; border-radius: 8px; padding: 8px 10px; margin-top: 8px; }
+  .msg.err { background: #fdecec; color: #b91c1c; }
+  .msg.warn { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+  .msg.ok { background: #e9f7ef; color: #1f6b3c; }
+  .rates ul.nt { margin: 4px 0 0; padding-left: 18px; font-size: 12px; color: var(--mute); }
   .fld.usd input { border-left: 5px solid var(--usd); }
   .fld.krw input { border-left: 5px solid var(--krw); }
   .fld.disc input { border-left: 5px solid var(--disc); }
@@ -225,6 +234,25 @@
   <h2><span class="no">5</span>실시간 계산기</h2>
   <div class="calc">
     <div class="card">
+      <div class="rates" id="ratePanel" style="display:none">
+        <h3>요금표(21차)에서 객실비 불러오기</h3>
+        <p class="note" style="margin:0 0 10px">호텔·객실·날짜를 고르면 박별 요금을 자동으로 더해 "호텔 총 객실비"에 넣어줍니다. 조건이 있는 요금은 확인 체크 후에만 적용됩니다.</p>
+        <div class="grid2">
+          <div class="fld"><label>지역</label><select id="rt-island"></select></div>
+          <div class="fld"><label>호텔</label><select id="rt-hotel"></select></div>
+        </div>
+        <div class="fld"><label>요금 프로그램 <i>(요금표의 블록 이름)</i></label><select id="rt-prog"></select></div>
+        <div class="fld"><label>객실</label><select id="rt-room"></select></div>
+        <div class="grid2">
+          <div class="fld"><label>체크인</label><input type="date" id="rt-in"></div>
+          <div class="fld"><label>숙박(박)</label><input type="text" inputmode="numeric" id="rt-n" value="4"></div>
+        </div>
+        <div class="fld"><label>예약 기준일 <i>(오늘 날짜가 기본, 예약가능기간 판단용)</i></label><input type="date" id="rt-today"></div>
+        <div id="rt-out"></div>
+        <label id="rt-ack-wrap" style="display:none;font-size:13px;margin-top:8px"><input type="checkbox" id="rt-ack"> 위 조건(프로모션·Blackout·최소숙박 등)을 확인했고 이 고객에게 적용 가능합니다</label>
+        <label style="font-size:13px;display:block;margin-top:6px"><input type="checkbox" id="rt-portage" checked> 요금표에 적힌 포터리지 등 의무 부대비용을 "호텔 별도비용"에 함께 넣기</label>
+        <button type="button" class="primary" id="rt-apply" style="width:100%;margin-top:10px" disabled>이 객실비를 계산기에 적용</button>
+      </div>
       <div class="grp">핵심 입력</div>
       <div class="fld usd"><label>호텔 총 객실비 <i>USD · 2인 객실 합계 (요금표 1박 요금 × 박수)</i></label>
         <input type="text" inputmode="decimal" id="hotel" value="1,000"></div>
@@ -355,6 +383,7 @@
 
 <footer>(주)아일항공여행사 · 하와이 허니문 요금 계산 안내 · 요금표 21차(2026.10.07) 기준 · 내부 자료</footer>
 
+<script src="data/hawaii-rates-21.js"></script>
 <script>
 (function () {
   var DEFAULTS = {
@@ -456,6 +485,120 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u.href).then(done, function () {});
     else done();
   });
+
+
+  // ===== 요금표(21차) 연동: 호텔·객실·날짜 → 박별 요금 합계 =====
+  (function () {
+    var D = window.HAWAII_RATES;
+    if (!D || !D.hotels) return;
+    $('ratePanel').style.display = 'block';
+    var hotels = D.hotels, cur = null;
+    var iso = function (d) { var m = d.getMonth() + 1, day = d.getDate(); return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day; };
+    function opt(sel, items, keepFirst) {
+      sel.innerHTML = '';
+      items.forEach(function (it) { var o = document.createElement('option'); o.value = it.v; o.textContent = it.t; if (it.dis) o.disabled = true; sel.appendChild(o); });
+    }
+    $('rt-today').value = iso(new Date());
+    var islands = [];
+    hotels.forEach(function (h) { if (islands.indexOf(h.island) < 0) islands.push(h.island); });
+    opt($('rt-island'), islands.map(function (i) { return { v: i, t: i }; }));
+
+    function fillHotels() {
+      var isl = $('rt-island').value;
+      opt($('rt-hotel'), hotels.map(function (h, i) { return { h: h, i: i }; }).filter(function (x) { return x.h.island === isl; })
+        .map(function (x) { return { v: x.i, t: x.h.name + (x.h.grade ? ' ★' + x.h.grade : '') }; }));
+      fillProgs();
+    }
+    function progStatus(p) {
+      var today = $('rt-today').value, w = p.window || [];
+      if (w[1] && today > w[1]) return 'expired';
+      if (w[0] && today < w[0]) return 'notyet';
+      return '';
+    }
+    function fillProgs() {
+      var h = hotels[+$('rt-hotel').value];
+      var list = [];
+      h.programs.forEach(function (p, i) {
+        var usable = p.rows.some(function (r) { return !r.error; });
+        if (!usable) return;
+        var st = progStatus(p);
+        var t = p.title + (p.breakfast ? ' [조식포함]' : ' [조식불포함]') + (p.review ? ' ⚠조건' : '') +
+          (st === 'expired' ? ' ⛔예약기간 종료' : st === 'notyet' ? ' ⛔예약 시작 전' : '');
+        list.push({ v: i, t: t });
+      });
+      if (!list.length) list = [{ v: -1, t: '요금 없음 (별도 문의 호텔)', dis: false }];
+      opt($('rt-prog'), list);
+      fillRooms();
+    }
+    function fillRooms() {
+      var h = hotels[+$('rt-hotel').value], pi = +$('rt-prog').value;
+      if (pi < 0 || !h.programs[pi]) { opt($('rt-room'), [{ v: '', t: '-' }]); return calcRates(); }
+      var seen = {}, rooms = [];
+      h.programs[pi].rows.forEach(function (r) { if (!r.error && !seen[r.room]) { seen[r.room] = 1; rooms.push({ v: r.room, t: r.room }); } });
+      opt($('rt-room'), rooms);
+      calcRates();
+    }
+    function addDays(isoStr, n) { var d = new Date(isoStr + 'T00:00:00'); d.setDate(d.getDate() + n); return iso(d); }
+
+    function calcRates() {
+      var out = $('rt-out'), btn = $('rt-apply'), ackWrap = $('rt-ack-wrap');
+      cur = null; btn.disabled = true; ackWrap.style.display = 'none';
+      var h = hotels[+$('rt-hotel').value], pi = +$('rt-prog').value, room = $('rt-room').value;
+      var cin = $('rt-in').value, n = parseInt($('rt-n').value, 10) || 0;
+      if (!h || pi < 0 || !h.programs[pi]) { out.innerHTML = '<div class="msg err">이 호텔은 요금표에 객실요금이 없습니다. 별도 문의 후 객실비를 직접 입력하세요.</div>'; return; }
+      var p = h.programs[pi], html = '', errs = [], warns = [];
+      if (!cin || n < 1) { out.innerHTML = '<div class="msg warn">체크인 날짜와 숙박 박수를 입력하세요.</div>'; return; }
+      var rows = p.rows.filter(function (r) { return !r.error && r.room === room; });
+      var total = 0, lines = [], review = !!p.review, minN = p.min_nights || 0;
+      for (var i = 0; i < n; i++) {
+        var d = addDays(cin, i), hit = null;
+        rows.forEach(function (r) { r.periods.forEach(function (pr) { if (d >= pr[0] && d <= pr[1] && !hit) hit = r; }); });
+        if (!hit) { errs.push(d + ' 요금표에 해당 날짜 요금이 없습니다'); lines.push('<div class="nightrow"><span>' + d + '</span><span class="d">요금 없음</span></div>'); continue; }
+        total += hit.rate; if (hit.review) review = true; if (hit.min_nights) minN = Math.max(minN, hit.min_nights);
+        lines.push('<div class="nightrow"><span>' + d + '</span><span>$' + hit.rate.toLocaleString('en-US') + '</span></div>');
+      }
+      var st = progStatus(p);
+      if (st === 'expired') errs.push('이 프로그램의 예약가능기간(Booking Window)이 이미 종료되었습니다 (' + (p.window[1] || '') + ')');
+      if (st === 'notyet') errs.push('이 프로그램은 아직 예약 시작 전입니다 (' + (p.window[0] || '') + ' 부터)');
+      if (minN && n < minN) errs.push('최소 ' + minN + '박 이상 예약해야 하는 요금입니다');
+      if (p.blackout && p.blackout.length) warns.push('Blackout/제한 기간 안내가 있습니다 — 체크인~체크아웃이 겹치지 않는지 확인하세요');
+      if (review) warns.push('조건부 요금입니다(프로모션·최소숙박·콤보·신규예약자 등). 아래 조건을 읽고 확인 체크가 필요합니다');
+      if (h.portage_usd) warns.push('이 호텔은 의무 부대비용 1인 $' + h.portage_usd + '(포터리지 등)이 별도입니다');
+      var perN = n ? Math.round(total / n) : 0;
+      html += '<div style="margin-top:6px"><b>' + h.name + '</b> · ' + room + ' · ' + n + '박 · ' + (p.breakfast ? '조식 포함' : '조식 불포함') + '</div>';
+      html += lines.join('');
+      html += '<div class="row"><span>객실 총액 (2인 1실, 세금·리조트피 포함 요금)</span><span class="u">$' + total.toLocaleString('en-US') + '</span></div>';
+      errs.forEach(function (e) { html += '<div class="msg err">⛔ ' + e + '</div>'; });
+      warns.forEach(function (w) { html += '<div class="msg warn">⚠ ' + w + '</div>'; });
+      var notes = (p.notes || []).concat(h.notes || []);
+      if (notes.length) html += '<ul class="nt">' + notes.slice(0, 8).map(function (t) { return '<li>' + t.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</li>'; }).join('') + '</ul>';
+      out.innerHTML = html;
+      if (review) ackWrap.style.display = 'block';
+      cur = { total: total, errs: errs.length, review: review, h: h, room: room, n: n, bf: p.breakfast };
+      refreshApply();
+    }
+    function refreshApply() {
+      var btn = $('rt-apply');
+      btn.disabled = !(cur && cur.errs === 0 && cur.total > 0 && (!cur.review || $('rt-ack').checked));
+    }
+    $('rt-apply').addEventListener('click', function () {
+      if (!cur) return;
+      $('hotel').value = cur.total.toLocaleString('en-US');
+      $('hextra').value = ($('rt-portage').checked && cur.h.portage_usd) ? String(cur.h.portage_usd) : '0';
+      $('c-hotel').value = cur.h.name; $('c-room').value = cur.room; $('c-nights').value = String(cur.n);
+      render();
+      var a = $('alert'); a.style.display = 'block';
+      a.textContent = '객실비 $' + cur.total.toLocaleString('en-US') + (cur.bf ? ' (조식 포함 요금)' : ' (조식 불포함 요금 — 조식이 필요하면 상세 항목의 "조식 추가비"를 입력하세요)') + '을 적용했습니다.';
+      document.querySelector('.result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    $('rt-island').addEventListener('change', fillHotels);
+    $('rt-hotel').addEventListener('change', fillProgs);
+    $('rt-prog').addEventListener('change', fillRooms);
+    ['rt-room', 'rt-in', 'rt-today'].forEach(function (id) { $(id).addEventListener('change', function () { if (id === 'rt-today') fillProgs(); else calcRates(); }); });
+    $('rt-n').addEventListener('input', calcRates);
+    $('rt-ack').addEventListener('change', refreshApply);
+    fillHotels();
+  })();
 
   render();
 })();
