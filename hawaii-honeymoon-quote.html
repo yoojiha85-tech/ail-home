@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>하와이 허니문 견적 안내 | 아일항공여행사</title>
+<style>
+  :root {
+    --rose: #e88d8d; --gold: #d4a373; --ink: #2d3436; --mute: #6b7280;
+    --line: #efe7e1; --bg: #fcf9f7; --card: #ffffff; --sea: #0f6b8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Noto Sans KR', -apple-system, 'Malgun Gothic', sans-serif; line-height: 1.7; padding-bottom: 84px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 18px; }
+  .hero { background: linear-gradient(160deg, #0f6b8a 0%, #3aa0b8 55%, #e88d8d 130%); color: #fff; padding: 40px 0 70px; text-align: center; }
+  .hero small { letter-spacing: .18em; font-size: 12px; opacity: .85; }
+  .hero h1 { margin: 8px 0 6px; font-size: 26px; font-weight: 800; }
+  .hero p { margin: 0; opacity: .92; font-size: 15px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+  .pill { background: rgba(255,255,255,.18); border-radius: 999px; padding: 4px 14px; font-size: 13px; }
+
+  .price { background: var(--card); border-radius: 20px; margin-top: -48px; padding: 24px 20px; text-align: center;
+    box-shadow: 0 10px 30px rgba(45,52,54,.12); position: relative; }
+  .price .lab { color: var(--mute); font-size: 13px; }
+  .price .was { color: #9ca3af; text-decoration: line-through; font-size: 15px; margin-top: 6px; }
+  .price .main { font-size: 38px; font-weight: 900; color: var(--ink); line-height: 1.2; }
+  .price .main span { font-size: 20px; font-weight: 700; }
+  .save { display: inline-block; background: #fdecec; color: #d64545; font-weight: 700; font-size: 13px; border-radius: 999px; padding: 3px 12px; margin-top: 6px; }
+  .total { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: baseline; }
+  .total b { font-size: 20px; }
+  .fine { color: var(--mute); font-size: 12px; margin: 10px 0 0; }
+
+  section { margin: 34px 0; }
+  h2 { font-size: 19px; margin: 0 0 6px; }
+  .sub { color: var(--mute); font-size: 14px; margin: 0 0 14px; }
+  .cards { display: grid; gap: 12px; }
+  .c { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .c .ic { font-size: 26px; line-height: 1; flex: none; width: 36px; text-align: center; }
+  .c h3 { margin: 0 0 2px; font-size: 16px; }
+  .c p { margin: 0; font-size: 14px; color: var(--mute); }
+
+  .twocol { display: grid; gap: 12px; }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+  .box h3 { margin: 0 0 8px; font-size: 16px; }
+  .box ul { margin: 0; padding-left: 0; list-style: none; font-size: 14px; }
+  .box li { padding: 5px 0 5px 24px; position: relative; border-bottom: 1px solid #f6f1ed; }
+  .box li:last-child { border-bottom: 0; }
+  .box.in li::before { content: '✓'; position: absolute; left: 4px; color: #1f8a4c; font-weight: 800; }
+  .box.out li::before { content: '–'; position: absolute; left: 6px; color: #b45309; font-weight: 800; }
+  .box small { color: var(--mute); }
+
+  .notice { background: #fff8ef; border: 1px solid #f3dcc0; border-radius: 16px; padding: 16px 18px; font-size: 14px; }
+  .notice ul { margin: 6px 0 0; padding-left: 18px; }
+  .notice li { margin: 4px 0; }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-top: 1px solid var(--line); padding: 10px 14px; display: flex; gap: 10px; z-index: 20; }
+  .bar a { flex: 1; text-align: center; padding: 13px 8px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; }
+  .bar .tel { background: var(--gold); color: #fff; }
+  .bar .kakao { background: #FEE500; color: #191919; }
+  footer { text-align: center; color: var(--mute); font-size: 12px; padding: 4px 0 20px; }
+  .invalid { background: #fff; border-radius: 16px; padding: 28px 20px; margin-top: -40px; text-align: center; box-shadow: 0 10px 30px rgba(45,52,54,.12); position: relative; }
+
+  @media (min-width: 640px) { .twocol { grid-template-columns: 1fr 1fr; } .hero h1 { font-size: 32px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <small>아일항공여행사 · HAWAII HONEYMOON</small>
+    <h1>하와이 허니문 견적 안내</h1>
+    <p id="hotel">담당자가 준비한 맞춤 견적입니다</p>
+    <div class="pill-row" id="pills"></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <div class="invalid" id="invalid" style="display:none">
+    <b>견적 정보를 불러오지 못했습니다.</b>
+    <p class="fine">담당자에게 받은 링크로 다시 접속해 주세요.</p>
+  </div>
+
+  <div id="body">
+  <div class="price">
+    <div class="lab">신랑·신부 1인 기준</div>
+    <div class="was" id="was" style="display:none"></div>
+    <div class="main"><span id="per">-</span></div>
+    <div id="saveWrap" style="display:none"><span class="save" id="save"></span></div>
+    <div class="total"><span>2인 합계</span><b id="tot">-</b></div>
+    <p class="fine" id="fxnote">항공·호텔·현지 일정·허니문 혜택이 모두 포함된 금액입니다.</p>
+  </div>
+
+  <section>
+    <h2>이 금액에 담긴 것</h2>
+    <p class="sub">복잡한 계산 없이, 허니문에 꼭 필요한 것만 담았습니다.</p>
+    <div class="cards">
+      <div class="c"><div class="ic">✈️</div><div><h3>왕복 국제선 항공</h3><p>인천 ↔ 호놀룰루 왕복 항공권</p></div></div>
+      <div class="c"><div class="ic">🏝️</div><div><h3>호텔 &amp; 현지 일정</h3><p>선택하신 호텔 객실, 세금·리조트피, 현지 투어와 가이드 팁까지</p></div></div>
+      <div class="c"><div class="ic">🎁</div><div><h3>허니문 혜택 &amp; 여행자보험</h3><p>허니문 사은품과 여행자보험이 함께 포함됩니다</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>포함 / 불포함 안내</h2>
+    <div class="twocol">
+      <div class="box in">
+        <h3>포함 사항</h3>
+        <ul>
+          <li>인천–호놀룰루 왕복 항공권</li>
+          <li>선택 호텔 숙박 (세금·리조트피 포함)</li>
+          <li>현지 허니문 일정 및 차량</li>
+          <li>가이드 팁 · 스냅 작가 팁</li>
+          <li>허니문 사은품</li>
+          <li>여행자보험</li>
+        </ul>
+      </div>
+      <div class="box out">
+        <h3>불포함 사항</h3>
+        <ul>
+          <li>자유식 식사 및 개인 경비</li>
+          <li>선택 추가 옵션 <small>(예: 하나우마베이 추가, 왕복 셔틀, 서핑 장비 대여 등)</small></li>
+          <li>렌터카 연료·주차비 등 현지 발생 비용</li>
+          <li>호텔 현장 결제 비용 <small>(호텔에 따라 별도 안내)</small></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">세부 일정과 옵션 금액은 시즌·호텔에 따라 달라질 수 있어 담당자가 함께 안내드립니다.</p>
+  </section>
+
+  <section>
+    <div class="notice">
+      <b>꼭 확인해 주세요</b>
+      <ul>
+        <li>본 견적은 <span id="fxdate">견적 작성일</span> 기준으로 산출되었으며, 환율·항공·호텔 요금에 따라 변동될 수 있습니다.</li>
+        <li>객실 현황은 실시간이 아니므로 <b>예약 후 확정(컨펌)</b>을 받은 뒤 최종 확정됩니다.</li>
+        <li>호텔의 판매 중지·이용 불가 기간 및 취소 규정은 호텔 사정에 따라 예고 없이 바뀔 수 있습니다.</li>
+        <li>자세한 여행 조건과 취소 규정은 계약 시 안내드리는 약관을 따릅니다.</li>
+      </ul>
+    </div>
+  </section>
+  </div>
+
+</main>
+
+<footer>(주)아일항공여행사 · 허니문 전문 여행사</footer>
+
+<div class="bar">
+  <a class="tel" href="tel:043-250-7777">📞 전화 상담</a>
+  <a class="kakao" href="http://pf.kakao.com/_xlxaXBs/chat" target="_blank" rel="noopener">💬 카카오톡 상담</a>
+</div>
+
+<script>
+(function () {
+  // 담당자 화면(hawaii-price-guide.html)에서 만든 링크의 값만 읽어 표시합니다.
+  // 원가·마크업·사은품 금액은 이 페이지로 전달되지 않습니다.
+  var q = new URLSearchParams(location.search);
+  function int(k) { var v = parseInt(q.get(k), 10); return isFinite(v) && v >= 0 ? v : 0; }
+  function text(k, max) { return (q.get(k) || '').replace(/[\r\n]+/g, ' ').slice(0, max || 60).trim(); }
+  function won(n) { return n.toLocaleString('ko-KR') + '원'; }
+  function el(id) { return document.getElementById(id); }
+
+  var per = int('p'), disc = int('x');
+  if (per <= 0) {
+    el('body').style.display = 'none';
+    el('invalid').style.display = 'block';
+    return;
+  }
+
+  el('per').textContent = won(per);
+  el('tot').textContent = won(per * 2);
+
+  if (disc > 0) {
+    el('was').textContent = '정상가 ' + won(per + disc);
+    el('was').style.display = 'block';
+    el('save').textContent = '특별 할인 −' + won(disc) + ' (1인)';
+    el('saveWrap').style.display = 'block';
+  }
+
+  var hotel = text('h', 50), room = text('r', 50), nights = int('n'), dates = text('d', 40), fd = text('f', 20);
+  if (hotel) el('hotel').textContent = hotel + (room ? ' · ' + room : '');
+  var pills = el('pills');
+  [dates, nights ? nights + '박' : '', '성인 2인'].forEach(function (t) {
+    if (!t) return;
+    var s = document.createElement('span'); s.className = 'pill'; s.textContent = t; pills.appendChild(s);
+  });
+  if (fd) el('fxdate').textContent = fd;
+})();
+</script>
+</body>
+</html>
