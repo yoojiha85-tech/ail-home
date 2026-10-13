@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>하와이 허니문 요금 계산 안내 (직원용)</title>
+<style>
+  :root {
+    --usd: #0052cc; --usd-bg: #eaf2ff;
+    --krw: #1f8a4c; --krw-bg: #e9f7ef;
+    --disc: #d64545; --disc-bg: #fdecec;
+    --gold: #d4a373; --ink: #2d3436; --mute: #6b7280;
+    --line: #e5e7eb; --bg: #fcf9f7; --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Noto Sans KR', -apple-system, 'Malgun Gothic', sans-serif; line-height: 1.6; padding-bottom: 96px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  header.top { background: #2d3436; color: #fff; padding: 28px 0 24px; }
+  header.top h1 { margin: 0 0 6px; font-size: 24px; }
+  header.top p { margin: 0; color: #d1d5db; font-size: 14px; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { background: rgba(255,255,255,.12); border-radius: 999px; padding: 4px 12px; font-size: 12px; }
+  .badge.warn { background: #b45309; }
+  section { margin: 28px 0; }
+  h2 { font-size: 20px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+  h2 .no { background: var(--gold); color: #fff; width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex: none; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .note { color: var(--mute); font-size: 13px; margin: 8px 0 0; }
+  .u { color: var(--usd); font-weight: 700; } .k { color: var(--krw); font-weight: 700; } .d { color: var(--disc); font-weight: 700; }
+
+  /* 공식 */
+  .formula { text-align: center; padding: 26px 16px; }
+  .formula .eq { font-size: 22px; font-weight: 700; line-height: 1.9; }
+  .formula .eq span { padding: 2px 8px; border-radius: 8px; white-space: nowrap; display: inline-block; }
+  .formula .u-bg { background: var(--usd-bg); color: var(--usd); }
+  .formula .k-bg { background: var(--krw-bg); color: var(--krw); }
+  .formula .d-bg { background: var(--disc-bg); color: var(--disc); }
+
+  /* 3단계 */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; }
+  .step b.n { color: var(--gold); font-size: 13px; }
+  .step h3 { margin: 4px 0 6px; font-size: 16px; }
+  .step .ex { margin-top: 8px; background: #f8f5f2; border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+
+  /* 표 */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 13px; }
+  .t-usd th { background: var(--usd-bg); color: var(--usd); }
+  .t-krw th { background: var(--krw-bg); color: var(--krw); }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; background: #fff3cd; color: #92400e; margin-left: 4px; }
+
+  /* 기본값 카드 */
+  .defaults { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .def { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .def small { color: var(--mute); display: block; font-size: 12px; }
+  .def strong { font-size: 20px; display: block; margin: 4px 0; }
+  .def em { font-style: normal; font-size: 12px; color: var(--mute); }
+
+  /* 계산기 */
+  .calc { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; align-items: start; }
+  .fld { margin-bottom: 12px; }
+  .fld label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .fld label i { font-style: normal; font-weight: 400; color: var(--mute); font-size: 12px; margin-left: 4px; }
+  .fld input[type=text] { width: 100%; padding: 11px 12px; font-size: 16px; border: 1.5px solid var(--line); border-radius: 10px; text-align: right; background: #fff; }
+  .fld input:focus { outline: none; border-color: var(--gold); }
+  .fld.usd input { border-left: 5px solid var(--usd); }
+  .fld.krw input { border-left: 5px solid var(--krw); }
+  .fld.disc input { border-left: 5px solid var(--disc); }
+  .grp { font-size: 12px; font-weight: 700; color: var(--mute); margin: 14px 0 8px; letter-spacing: .02em; }
+  .grp:first-child { margin-top: 0; }
+  details.more { margin-top: 6px; }
+  details.more summary { cursor: pointer; font-size: 13px; color: var(--mute); padding: 6px 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  .result { position: sticky; top: 12px; }
+  .row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+  .row span:last-child { font-weight: 700; text-align: right; }
+  .big { background: #2d3436; color: #fff; border-radius: 12px; padding: 16px; margin: 12px 0; text-align: center; }
+  .big small { color: #d1d5db; display: block; font-size: 12px; }
+  .big strong { font-size: 32px; display: block; }
+  .big.sub { background: #fff3e6; color: var(--ink); border: 1px solid var(--gold); }
+  .big.sub small { color: var(--mute); }
+  .big.sub strong { font-size: 24px; }
+  .btns { display: flex; gap: 8px; margin-top: 10px; }
+  button { font: inherit; cursor: pointer; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--line); background: #fff; }
+  button.primary { background: var(--gold); color: #fff; border-color: var(--gold); font-weight: 700; }
+  .alert { background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; border-radius: 10px; padding: 10px 12px; font-size: 13px; margin-top: 10px; display: none; }
+
+  /* 예시 */
+  .steptable td:last-child, .steptable th:last-child { text-align: right; white-space: nowrap; }
+  tr.hl td { background: #fff3e6; font-weight: 700; }
+
+  /* 체크리스트 */
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .chk { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 12px; padding: 14px; }
+  .chk h3 { margin: 0 0 6px; font-size: 15px; }
+  .chk p { margin: 0; font-size: 13px; color: var(--mute); }
+  .sev { font-weight: 700; }
+  .s-hi { color: #b91c1c; } .s-mid { color: #b45309; } .s-lo { color: #4b5563; }
+
+  /* 하단 고정바 (모바일) */
+  .sticky-bar { display: none; position: fixed; left: 0; right: 0; bottom: 0; background: #2d3436; color: #fff;
+    padding: 10px 16px; z-index: 50; justify-content: space-between; align-items: center; }
+  .sticky-bar small { color: #d1d5db; font-size: 11px; display: block; }
+  .sticky-bar strong { font-size: 20px; }
+  footer { color: var(--mute); font-size: 12px; text-align: center; padding: 8px 0 24px; }
+
+  @media (max-width: 760px) {
+    .steps, .two, .defaults, .calc, .checks { grid-template-columns: 1fr; }
+    .defaults { grid-template-columns: 1fr 1fr; }
+    .formula .eq { font-size: 17px; }
+    .result { position: static; }
+    .sticky-bar { display: flex; }
+    th, td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>하와이 허니문 요금 계산 안내</h1>
+    <p>직원 전용 · 고객에게 화면을 공유하거나 링크를 보내지 마세요 (마크업·원가 포함)</p>
+    <div class="badges">
+      <span class="badge">요금표 21차 · 2026.10.07 기준</span>
+      <span class="badge">성인 2인 고정 (허니문)</span>
+      <span class="badge">환율 직접 입력</span>
+      <span class="badge warn">내부용 – 외부 노출 금지</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ② 공식 -->
+<section>
+  <h2><span class="no">1</span>최종 1인 판매가는 이렇게 계산합니다</h2>
+  <div class="card formula">
+    <div class="eq">
+      1인 판매가 =
+      <span class="u-bg">(1인 현지비용 USD × 환율)</span> +
+      <span class="k-bg">원화비용</span> −
+      <span class="d-bg">할인</span>
+    </div>
+    <p class="note">달러로 정해진 현지 비용에만 환율을 곱하고, 한국에서 원화로 결제되는 비용은 그대로 더합니다.<br>
+    마지막에 <b>1,000원 단위로 반올림</b>(백원 자리 5 이상 올림)합니다. 반올림은 <b>최종 1인가에서 한 번만</b> 합니다.</p>
+  </div>
+</section>
+
+<!-- ③ 3단계 -->
+<section>
+  <h2><span class="no">2</span>3단계로 보면 쉽습니다</h2>
+  <div class="steps">
+    <div class="step">
+      <b class="n">STEP 1</b>
+      <h3>달러 비용 합치기</h3>
+      <div>객실비(1인분) + 지상비 + 팁 + 기타 현지비용</div>
+      <div class="ex"><span class="u">$500 + $210 = $710</span></div>
+    </div>
+    <div class="step">
+      <b class="n">STEP 2</b>
+      <h3>환율 곱하기</h3>
+      <div>달러 합계 × 직접 입력한 환율</div>
+      <div class="ex"><span class="u">$710 × 1,521 = 1,079,910원</span></div>
+    </div>
+    <div class="step">
+      <b class="n">STEP 3</b>
+      <h3>원화 더하고 할인 빼기</h3>
+      <div>항공 + 마크업 + 사은품 + 보험 − 할인 → 반올림</div>
+      <div class="ex"><span class="k">1,079,910 + 1,981,700 + 810,000</span> = 3,871,610 → <b>3,872,000원</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 항목표 -->
+<section>
+  <h2><span class="no">3</span>어떤 항목에 환율을 곱할까요?</h2>
+  <div class="two">
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="t-usd">
+        <tr><th colspan="2">A. 달러(USD) 항목 → 환율 곱함</th></tr>
+        <tr><td><b>호텔 객실비</b></td><td>숙박일별 객실 USD 합계 ÷ 2인</td></tr>
+        <tr><td><b>조식 추가비</b></td><td>조식 불포함 객실에서 추가 신청 시</td></tr>
+        <tr><td><b>호텔 별도비용</b></td><td>요금에 없는 부대비용<br><span class="note">예: 마우이 하얏트 포터리지 1인 $18, 카할라 픽업/샌딩 1인 $20</span></td></tr>
+        <tr><td><b>지상비</b></td><td>1인 USD (스마트 플러스 $150)</td></tr>
+        <tr><td><b>가이드팁</b></td><td>1인 USD ($30)</td></tr>
+        <tr><td><b>작가팁</b></td><td>1인 USD ($30)</td></tr>
+        <tr><td><b>기타 현지비용</b></td><td>1인 USD, 직접 입력</td></tr>
+      </table>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="t-krw">
+        <tr><th colspan="2">B. 원화(KRW) 항목 → 환율 곱하지 않음</th></tr>
+        <tr><td><b>국제선 항공</b></td><td>1인 원화</td></tr>
+        <tr><td><b>이웃섬 주내선</b></td><td>1인 원화 (이웃섬 포함 일정만)</td></tr>
+        <tr><td><b>마크업</b><span class="tag">내부용</span></td><td>750,000원 (모든 호텔·이웃섬·5성급 동일)</td></tr>
+        <tr><td><b>허니문 사은품</b><span class="tag">내부용</span></td><td>50,000원</td></tr>
+        <tr><td><b>여행자보험</b></td><td>10,000원</td></tr>
+        <tr><td><b class="d">할인</b></td><td>1인 기준으로 최종가에서 차감</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 기본값 -->
+<section>
+  <h2><span class="no">4</span>현재 기본 입력값</h2>
+  <div class="defaults">
+    <div class="def"><small>국제선 항공 / 1인</small><strong class="k">1,981,700원</strong><em>원화</em></div>
+    <div class="def"><small>적용 환율</small><strong class="u">1,521원/USD</strong><em>직접 입력 · 기준일 함께 기록</em></div>
+    <div class="def"><small>지상비 + 가이드팁 + 작가팁</small><strong class="u">$210</strong><em>$150 + $30 + $30</em></div>
+    <div class="def"><small>마크업 + 사은품 + 보험</small><strong class="k">810,000원</strong><em>750,000 + 50,000 + 10,000</em></div>
+  </div>
+  <p class="note">값이 바뀌면 아래 계산기의 해당 칸을 직접 수정하세요. (환율은 고정값이 아니라 담당자가 그날 기준으로 입력합니다.)</p>
+</section>
+
+<!-- ⑥ 계산기 -->
+<section id="calc">
+  <h2><span class="no">5</span>실시간 계산기</h2>
+  <div class="calc">
+    <div class="card">
+      <div class="grp">핵심 입력</div>
+      <div class="fld usd"><label>호텔 총 객실비 <i>USD · 2인 객실 합계 (요금표 1박 요금 × 박수)</i></label>
+        <input type="text" inputmode="decimal" id="hotel" value="1,000"></div>
+      <div class="fld usd"><label>환율 <i>원/USD · 담당자 직접 입력</i></label>
+        <input type="text" inputmode="decimal" id="fx" value="1,521"></div>
+      <div class="fld krw"><label>국제선 항공 <i>원/1인</i></label>
+        <input type="text" inputmode="numeric" id="air" value="1,981,700"></div>
+      <div class="fld krw"><label>마크업 <i>원/1인 · 내부용</i></label>
+        <input type="text" inputmode="numeric" id="markup" value="750,000"></div>
+      <div class="fld disc"><label>할인 <i>원/1인</i></label>
+        <input type="text" inputmode="numeric" id="disc" value="0"></div>
+
+      <details class="more">
+        <summary>상세 항목 열기 (지상비·팁·조식·부대비용·주내선 등)</summary>
+        <div class="grp">달러 항목 (1인 USD)</div>
+        <div class="grid2">
+          <div class="fld usd"><label>지상비</label><input type="text" inputmode="decimal" id="land" value="150"></div>
+          <div class="fld usd"><label>가이드팁</label><input type="text" inputmode="decimal" id="gtip" value="30"></div>
+          <div class="fld usd"><label>작가팁</label><input type="text" inputmode="decimal" id="ptip" value="30"></div>
+          <div class="fld usd"><label>조식 추가비</label><input type="text" inputmode="decimal" id="bf" value="0"></div>
+          <div class="fld usd"><label>호텔 별도비용</label><input type="text" inputmode="decimal" id="hextra" value="0"></div>
+          <div class="fld usd"><label>기타 현지비용</label><input type="text" inputmode="decimal" id="etc" value="0"></div>
+        </div>
+        <div class="grp">원화 항목 (1인 원)</div>
+        <div class="grid2">
+          <div class="fld krw"><label>이웃섬 주내선</label><input type="text" inputmode="numeric" id="inter" value="0"></div>
+          <div class="fld krw"><label>허니문 사은품 <i>내부용</i></label><input type="text" inputmode="numeric" id="gift" value="50,000"></div>
+          <div class="fld krw"><label>여행자보험</label><input type="text" inputmode="numeric" id="ins" value="10,000"></div>
+        </div>
+      </details>
+      <div class="btns">
+        <button type="button" id="reset">초기값으로 되돌리기</button>
+        <button type="button" class="primary" id="copy">결과 복사</button>
+      </div>
+    </div>
+
+    <div class="card result">
+      <div class="row"><span>호텔 객실비 / 1인</span><span id="r-hotel">-</span></div>
+      <div class="row"><span>현지비용 / 1인</span><span class="u" id="r-usd">-</span></div>
+      <div class="row"><span>현지비용 원화환산</span><span class="u" id="r-conv">-</span></div>
+      <div class="row"><span>원화비용 합계</span><span class="k" id="r-krw">-</span></div>
+      <div class="row"><span>할인</span><span class="d" id="r-disc">-</span></div>
+      <div class="row"><span>반올림 전 금액</span><span id="r-raw">-</span></div>
+      <div class="big"><small>최종 1인 판매가 (1,000원 단위 반올림)</small><strong id="r-per">-</strong></div>
+      <div class="big sub"><small>2인 총 판매가</small><strong id="r-total">-</strong></div>
+      <div class="alert" id="alert"></div>
+      <p class="note">성인 2인 기준입니다. 2인 총액 = 반올림된 1인가 × 2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 예시 -->
+<section>
+  <h2><span class="no">6</span>계산 예시 (단계별 풀이)</h2>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="steptable">
+      <tr><th colspan="2">예시 A · 호텔 총 객실비 $1,000 / 환율 1,521 / 기본값</th><th>결과</th></tr>
+      <tr><td>① 객실비 1인</td><td>$1,000 ÷ 2명</td><td class="u">$500</td></tr>
+      <tr><td>② 달러 합계</td><td>$500 + $210 (지상비·팁)</td><td class="u">$710</td></tr>
+      <tr><td>③ 원화 환산</td><td>$710 × 1,521</td><td class="u">1,079,910원</td></tr>
+      <tr><td>④ 원화비용 더하기</td><td>+ 항공 1,981,700 + 810,000</td><td>3,871,610원</td></tr>
+      <tr class="hl"><td>⑤ 1,000원 단위 반올림</td><td>1인 판매가</td><td>3,872,000원</td></tr>
+      <tr class="hl"><td>⑥ 2인 합계</td><td>3,872,000 × 2</td><td>7,744,000원</td></tr>
+    </table>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;margin-top:12px">
+    <table class="steptable">
+      <tr><th colspan="2">예시 B · 쉐라톤 와이키키 City View 4박 (2026 SW LTO, 조식 불포함, 1박 $410)</th><th>결과</th></tr>
+      <tr><td>① 객실비 1인</td><td>$410 × 4박 = $1,640 ÷ 2명</td><td class="u">$820</td></tr>
+      <tr><td>② 달러 합계</td><td>$820 + $210</td><td class="u">$1,030</td></tr>
+      <tr><td>③ 원화 환산</td><td>$1,030 × 1,521</td><td class="u">1,566,630원</td></tr>
+      <tr><td>④ 원화비용 더하기</td><td>+ 1,981,700 + 810,000</td><td>4,358,330원</td></tr>
+      <tr class="hl"><td>⑤ 반올림 후 1인가</td><td>1,000원 단위</td><td>4,358,000원</td></tr>
+      <tr class="hl"><td>⑥ 2인 합계</td><td>4,358,000 × 2</td><td>8,716,000원</td></tr>
+    </table>
+  </div>
+  <p class="note">※ 예시 B는 설명용입니다. 실제 판매 전 예약가능기간(Booking Window)·최소숙박·Blackout을 반드시 확인하세요.</p>
+</section>
+
+<!-- ⑧ 21차 주의 -->
+<section>
+  <h2><span class="no">7</span>21차 요금표 적용 시 꼭 확인하세요</h2>
+  <div class="checks">
+    <div class="chk"><h3>① 세금·리조트피는 이미 포함</h3>
+      <p>객실요금에 세금과 리조트피가 포함되어 있습니다. <b>중복으로 더하지 않습니다.</b> 단, 마우이 하얏트 포터리지(1인 $18)처럼 요금표에 없는 별도 비용은 "호텔 별도비용"에 넣습니다.</p></div>
+    <div class="chk"><h3>② 조식은 원본 요금표 조건대로</h3>
+      <p>같은 호텔 안에도 "1박/조식포함"과 "1박/조식불포함" 표가 섞여 있습니다. 불포함 요금에 조식을 추가할 때만 "조식 추가비"를 입력하세요.</p></div>
+    <div class="chk"><h3>③ 무료숙박 프로모션은 조건 확정 시에만</h3>
+      <p>"4박 예약 시 업그레이드", "5박 이상", "신규 예약자에 한함" 등 조건이 맞을 때만 객실비에서 차감합니다.</p></div>
+    <div class="chk"><h3>④ 조건 미확정 요금은 자동견적 제외</h3>
+      <p>예약기간·최소숙박·Blackout·프로모션 우선순위가 확정되지 않은 요금은 계산기에 넣지 말고 별도 확인합니다. (예: 쉐라톤 와이키키 Blackout 7/6~7/9, 7/22~7/26 / 마우이 하얏트 최소 2박)</p></div>
+  </div>
+
+  <h2 style="margin-top:22px">요금표에서 발견된 주의 사항</h2>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table>
+      <tr><th>위험도</th><th>내용</th><th>조치</th></tr>
+      <tr><td class="sev s-hi">높음</td><td>쉐라톤 와이키키 <b>SEPTEMBER SPECIAL</b> 예약가능기간 08/12~09/30/2026 → 이미 종료</td><td>사용 금지</td></tr>
+      <tr><td class="sev s-mid">중간</td><td>쉐라톤 와이키키 WAIKIKI COLLECTION 기간 <b>08/16/06</b> (연도 오타로 추정)</td><td>원본 확인 전까지 사용 보류</td></tr>
+      <tr><td class="sev s-mid">중간</td><td>"스마트 플러스" 시트가 <b>25년 시즌</b> 표기</td><td>26~27 시즌 금액 확인</td></tr>
+      <tr><td class="sev s-mid">중간</td><td>이웃섬+오아후 조합: 오아후 리턴편이 <b>12시 이전</b> 도착해야 행사 조인 / 13~15시 도착 1인 $20 추가 / 16시 이후 개별 이동</td><td>고객 안내 + 별도비용 반영</td></tr>
+      <tr><td class="sev s-lo">참고</td><td>선택 추가 항목: 하나우마베이 +$30(입장료 $25 현장), 쿠알로아 왕복셔틀 +$45, 중식 $18, 서핑 장비 $10, 렌터카 성수기 별도 문의</td><td>"기타 현지비용"에 입력</td></tr>
+      <tr><td class="sev s-lo">참고</td><td>카할라 픽업 또는 샌딩 1인 $20 / 포시즌 코올리나는 픽업·샌딩 불가(개별 이동)</td><td>"호텔 별도비용"에 입력</td></tr>
+    </table>
+  </div>
+  <p class="note">객실사항은 실시간이 아니므로 반드시 예약 후 컨펌을 받아야 하며, 호텔의 Blackout·Stop sell·취소규정은 예고 없이 바뀔 수 있습니다.</p>
+</section>
+
+</main>
+
+<div class="sticky-bar" aria-live="polite">
+  <div><small>최종 1인 판매가</small><strong id="s-per">-</strong></div>
+  <div style="text-align:right"><small>2인 총액</small><strong id="s-total">-</strong></div>
+</div>
+
+<footer>(주)아일항공여행사 · 하와이 허니문 요금 계산 안내 · 요금표 21차(2026.10.07) 기준 · 내부 자료</footer>
+
+<script>
+(function () {
+  var DEFAULTS = {
+    hotel: '1,000', fx: '1,521', air: '1,981,700', markup: '750,000', disc: '0',
+    land: '150', gtip: '30', ptip: '30', bf: '0', hextra: '0', etc: '0',
+    inter: '0', gift: '50,000', ins: '10,000'
+  };
+  var ADULTS = 2; // 허니문: 성인 2인 고정
+  var ids = Object.keys(DEFAULTS);
+  var $ = function (id) { return document.getElementById(id); };
+
+  function num(id) {
+    var v = parseFloat(String($(id).value).replace(/,/g, ''));
+    return isFinite(v) && v > 0 ? v : 0;
+  }
+  function won(n) { return Math.round(n).toLocaleString('ko-KR') + '원'; }
+  function usd(n) { return '$' + (Math.round(n * 100) / 100).toLocaleString('en-US'); }
+
+  // 핵심 계산: 반올림은 최종 1인가에서만 1회 (1,000원 단위, 백원 자리 5 이상 올림)
+  function calc(v) {
+    var hotelPer = v.hotel / ADULTS;
+    var usdPer = hotelPer + v.bf + v.hextra + v.land + v.gtip + v.ptip + v.etc;
+    var conv = usdPer * v.fx;
+    var krw = v.air + v.inter + v.gift + v.ins + v.markup;
+    var raw = conv + krw - v.disc;
+    var per = Math.round(raw / 1000) * 1000;
+    return { hotelPer: hotelPer, usdPer: usdPer, conv: conv, krw: krw, raw: raw, per: per, total: per * ADULTS };
+  }
+
+  function read() {
+    var v = {};
+    ids.forEach(function (id) { v[id] = num(id); });
+    return v;
+  }
+
+  function render() {
+    var v = read(), r = calc(v);
+    $('r-hotel').textContent = usd(r.hotelPer);
+    $('r-usd').textContent = usd(r.usdPer);
+    $('r-conv').textContent = won(r.conv);
+    $('r-krw').textContent = '+ ' + won(r.krw);
+    $('r-disc').textContent = '− ' + won(v.disc);
+    $('r-raw').textContent = won(r.raw);
+    $('r-per').textContent = won(r.per);
+    $('r-total').textContent = won(r.total);
+    $('s-per').textContent = won(r.per);
+    $('s-total').textContent = won(r.total);
+
+    var msg = [];
+    if (v.fx <= 0) msg.push('환율이 0입니다. 오늘 적용 환율을 입력하세요.');
+    if (v.hotel <= 0) msg.push('호텔 총 객실비가 0입니다. 요금표 1박 요금 × 박수를 입력하세요.');
+    if (r.per <= 0) msg.push('판매가가 0 이하입니다. 할인 금액을 확인하세요.');
+    var a = $('alert');
+    a.style.display = msg.length ? 'block' : 'none';
+    a.innerHTML = msg.join('<br>');
+  }
+
+  // 입력 시 천 단위 콤마 자동 표시 (숫자·소수점만 허용)
+  function format(el) {
+    var raw = el.value.replace(/[^0-9.]/g, '');
+    var parts = raw.split('.');
+    parts[0] = (parts[0] || '0').replace(/^0+(?=\d)/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    el.value = parts.length > 1 ? parts[0] + '.' + parts[1].slice(0, 2) : parts[0];
+  }
+
+  ids.forEach(function (id) {
+    var el = $(id);
+    el.addEventListener('input', function () { format(el); render(); });
+    el.addEventListener('focus', function () { el.select(); });
+  });
+
+  $('reset').addEventListener('click', function () {
+    ids.forEach(function (id) { $(id).value = DEFAULTS[id]; });
+    render();
+  });
+
+  $('copy').addEventListener('click', function () {
+    var v = read(), r = calc(v);
+    var text = '[하와이 허니문 견적 계산]\n' +
+      '호텔 총 객실비 ' + usd(v.hotel) + ' / 환율 ' + v.fx.toLocaleString('ko-KR') + '원\n' +
+      '1인 현지비용 ' + usd(r.usdPer) + ' → ' + won(r.conv) + '\n' +
+      '1인 최종 판매가 ' + won(r.per) + ' / 2인 총액 ' + won(r.total);
+    var done = function () { $('copy').textContent = '복사 완료'; setTimeout(function () { $('copy').textContent = '결과 복사'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+    else done();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
