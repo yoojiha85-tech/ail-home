@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>허니트립 | 아일항공여행사 허니문 전문관</title>
+<meta name="description" content="몰디브·모리셔스·발리·푸켓·코사무이·칸쿤·하와이·호주 허니문을 한곳에서. 아일항공여행사 허니트립.">
+<style>
+:root{
+  --bg:#fbf7f3; --ink:#2b2a33; --sub:#6d6a75; --line:#eadfd6; --card:#fff;
+  --gold:#b98a4e; --rose:#c9667a; --navy:#1f2a44;
+  --shadow:0 6px 24px rgba(60,40,30,.08);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(251,247,243,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--navy)}
+.logo b{color:var(--rose)}
+nav{display:flex;gap:18px;font-size:14px;color:var(--sub)}
+nav a:hover{color:var(--ink)}
+@media(max-width:640px){nav{display:none}}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#1f2a44 0%,#3d3b63 55%,#c9667a 130%);color:#fff;padding:64px 0 72px;text-align:center}
+.hero small{letter-spacing:.3em;font-size:12px;opacity:.8}
+.hero h1{font-size:clamp(28px,5vw,46px);margin:12px 0 10px;line-height:1.25;font-weight:800}
+.hero p{opacity:.88;font-size:clamp(14px,2vw,17px)}
+.search{margin:28px auto 0;max-width:460px;position:relative}
+.search input{width:100%;height:50px;border-radius:30px;border:0;padding:0 22px;font-size:16px;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.search input:focus{outline:3px solid rgba(201,102,122,.5)}
+
+/* filter */
+.filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:28px 0 8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:22px;padding:8px 16px;font-size:14px;cursor:pointer;color:var(--sub);font-family:inherit}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* grid */
+section.block{padding:28px 0 8px}
+.region-title{font-size:20px;font-weight:800;margin:26px 0 14px;display:flex;align-items:center;gap:10px}
+.region-title span{font-size:13px;font-weight:500;color:var(--sub)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.cover{height:128px;padding:16px 18px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.cover .emoji{position:absolute;right:16px;top:12px;font-size:38px}
+.cover h3{font-size:24px;font-weight:800;line-height:1.1}
+.cover em{font-style:normal;font-size:13px;opacity:.92}
+.badge{position:absolute;left:16px;top:14px;background:rgba(255,255,255,.22);border-radius:12px;padding:2px 10px;font-size:11px;letter-spacing:.04em}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.desc{font-size:14px;color:var(--sub)}
+.main-btn{display:flex;justify-content:space-between;align-items:center;background:var(--navy);color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;font-size:15px}
+.main-btn:hover{background:#2e3d63}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.links a{font-size:13px;border:1px solid var(--line);border-radius:10px;padding:7px 12px;background:#fdfaf7}
+.links a:hover{border-color:var(--gold);color:var(--gold)}
+.empty{display:none;text-align:center;color:var(--sub);padding:60px 0}
+
+/* theme colors */
+.maldives{background:linear-gradient(135deg,#0aa6b7,#1b5fa8)}
+.mauritius{background:linear-gradient(135deg,#f08a5d,#b83b5e)}
+.bali{background:linear-gradient(135deg,#4bb26e,#1f7a6b)}
+.phuket{background:linear-gradient(135deg,#2cb5e8,#3b6fd8)}
+.samui{background:linear-gradient(135deg,#79c36a,#2d9a8f)}
+.cancun{background:linear-gradient(135deg,#00b7c2,#f2994a)}
+.hawaii{background:linear-gradient(135deg,#ff7e5f,#6a4fbf)}
+.australia{background:linear-gradient(135deg,#e2a23b,#c1543a)}
+
+footer{margin-top:56px;background:var(--navy);color:#cfd3e0;padding:36px 0;font-size:13px;text-align:center}
+footer b{color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">HONEY<b>TRIP</b></a>
+    <nav>
+      <a href="#indian">인도양</a><a href="#sea">동남아·발리</a><a href="#america">미주·하와이</a><a href="#oceania">오세아니아</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <small>AIL TRAVEL · HONEYMOON SPECIALIST</small>
+    <h1>평생 한 번,<br>가장 아름다운 허니문</h1>
+    <p>1999년부터 허니문만 준비해 온 아일항공여행사의 목적지별 전문관</p>
+    <div class="search"><input id="q" type="search" placeholder="목적지 또는 리조트·일정 검색 (예: 몰디브, 일정)" aria-label="검색"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="filters" id="filters">
+    <button class="chip on" data-r="all">전체</button>
+    <button class="chip" data-r="indian">인도양</button>
+    <button class="chip" data-r="sea">동남아·발리</button>
+    <button class="chip" data-r="america">미주·하와이</button>
+    <button class="chip" data-r="oceania">오세아니아</button>
+  </div>
+  <div id="content"></div>
+  <div class="empty" id="empty">검색 결과가 없습니다. 다른 키워드로 찾아보세요.</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>(주)아일항공여행사 · 허니트립</b></p>
+    <p style="margin-top:6px">상담·예약 문의는 담당자에게 연락해 주세요. 요금과 일정은 시즌·환율·항공 사정에 따라 변경될 수 있습니다.</p>
+  </div>
+</footer>
+
+<script>
+/* ▼ 링크 관리: 새 사이트가 생기면 이 목록만 수정하면 됩니다. ▼
+   main  = 대표 버튼(상품·요금 페이지)
+   links = 보조 버튼(일정, 리조트, 가이드북 등) */
+const REGIONS = [
+  {id:"indian", name:"인도양", sub:"Indian Ocean"},
+  {id:"sea", name:"동남아·발리", sub:"Southeast Asia"},
+  {id:"america", name:"미주·하와이", sub:"Americas"},
+  {id:"oceania", name:"오세아니아", sub:"Oceania"}
+];
+const DEST = [
+  {region:"indian", cls:"maldives", emoji:"🏝️", name:"몰디브", en:"MALDIVES", badge:"BEST",
+   desc:"워터빌라와 프라이빗 아일랜드, 허니문의 정석.",
+   main:{label:"몰디브 상품·요금", url:"https://malv5.edgeone.dev/"},
+   links:[{label:"📅 일정", url:"https://honeytrip-maldives-itinerary.vercel.app/"}]},
+  {region:"indian", cls:"mauritius", emoji:"🌺", name:"모리셔스", en:"MAURITIUS",
+   desc:"럭셔리 리조트와 다채로운 투어를 함께 즐기는 인도양의 진주.",
+   main:{label:"모리셔스 견적·요금", url:"https://honeytrip-mauritius-quote-20261027.yoojiha85.chatgpt.site/"},
+   links:[{label:"🏨 리조트&투어", url:"https://mauritiusall.edgeone.app"},
+          {label:"📅 일정", url:"https://honeytripmauritius.edgeone.dev/#schedule"},
+          {label:"📘 가이드북(PDF)", url:"https://zdcwtspzgvtxdsqvjvqv.supabase.co/storage/v1/object/public/mauritius-guidebooks/s.pdf"}]},
+  {region:"sea", cls:"bali", emoji:"🌴", name:"발리", en:"BALI",
+   desc:"풀빌라 감성과 힐링 스파, 가성비 높은 신혼여행지.",
+   main:{label:"발리 상품·요금", url:"https://ailbalihm.edgeone.dev/"},
+   links:[{label:"📅 일정표", url:"https://baliit7.edgeone.dev/"},
+          {label:"🏨 리조트 정보", url:"https://honeytrip-bali-villas-43.vercel.app/"}]},
+  {region:"sea", cls:"phuket", emoji:"⛵", name:"푸켓", en:"PHUKET",
+   desc:"안다만 바다와 요트 투어, 짧은 비행의 편안한 허니문.",
+   main:{label:"푸켓 상품·요금", url:"https://ailphuket.edgeone.dev/"},
+   links:[]},
+  {region:"sea", cls:"samui", emoji:"🥥", name:"코사무이", en:"KOH SAMUI",
+   desc:"조용하고 프라이빗한 풀빌라 중심의 휴양.",
+   main:{label:"코사무이 상품·요금", url:"https://kosamuinew.edgeone.dev/"},
+   links:[{label:"📅 일정표", url:"https://kosamuiitt.edgeone.dev/"},
+          {label:"📅 일정표 NEW", url:"https://honeytrip-samui-v11-preview-pdl9jm4od-justin-yoo.vercel.app/"}]},
+  {region:"america", cls:"cancun", emoji:"🌊", name:"칸쿤", en:"CANCUN",
+   desc:"카리브해 올인클루시브 리조트의 자유로운 휴양.",
+   main:{label:"칸쿤 통합 요금", url:"https://honeytrip-cancun-pricing-guide.yoojiha85.chatgpt.site/"},
+   links:[{label:"📅 일정", url:"https://honeytrip-us-cancun.vercel.app/"}]},
+  {region:"america", cls:"hawaii", emoji:"🌋", name:"하와이", en:"HAWAII",
+   desc:"섬마다 다른 매력, 허니문 꾸준한 인기 목적지.",
+   main:{label:"하와이 견적·요금", url:"https://honeytrip-hawaii-quote.yoojiha85.chatgpt.site/"},
+   links:[{label:"📅 일정", url:"https://honeytrip-hawaii-itinerary.yoojiha85.chatgpt.site/"},
+          {label:"🗺️ 섬 안내", url:"https://hawaiimain.edgeone.dev/#home"}]},
+  {region:"oceania", cls:"australia", emoji:"🦘", name:"호주", en:"AUSTRALIA",
+   desc:"시드니·멜버른 도시 감성과 자연을 함께 담은 허니문.",
+   main:{label:"호주 상품·요금", url:"https://hojuhoneymoon.edgeone.app"},
+   links:[{label:"📅 멜버른 3박 + 시드니 3박", url:"https://mel6n8d.edgeone.dev/#contact"},
+          {label:"📅 시드니 4박 6일", url:"https://honeytrip-sydney-4n6d.vercel.app/"}]}
+];
+
+const $content = document.getElementById("content");
+const $empty = document.getElementById("empty");
+let region = "all", keyword = "";
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function ext(u){return `href="${esc(u)}" target="_blank" rel="noopener noreferrer"`}
+
+function cardHTML(d){
+  return `<article class="card">
+    <div class="cover ${d.cls}">
+      ${d.badge?`<span class="badge">${d.badge}</span>`:""}
+      <span class="emoji">${d.emoji}</span>
+      <h3>${d.name}</h3><em>${d.en}</em>
+    </div>
+    <div class="body">
+      <p class="desc">${d.desc}</p>
+      <a class="main-btn" ${ext(d.main.url)}><span>${d.main.label}</span><span>→</span></a>
+      ${d.links.length?`<div class="links">${d.links.map(l=>`<a ${ext(l.url)}>${l.label}</a>`).join("")}</div>`:""}
+    </div>
+  </article>`;
+}
+
+function match(d){
+  if(!keyword) return true;
+  const hay = [d.name,d.en,d.desc,d.main.label,...d.links.map(l=>l.label)].join(" ").toLowerCase();
+  return hay.includes(keyword);
+}
+
+function render(){
+  let html = "", total = 0;
+  REGIONS.forEach(r=>{
+    if(region!=="all" && region!==r.id) return;
+    const items = DEST.filter(d=>d.region===r.id && match(d));
+    if(!items.length) return;
+    total += items.length;
+    html += `<section class="block" id="${r.id}">
+      <h2 class="region-title">${r.name}<span>${r.sub}</span></h2>
+      <div class="grid">${items.map(cardHTML).join("")}</div></section>`;
+  });
+  $content.innerHTML = html;
+  $empty.style.display = total ? "none" : "block";
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));
+  region = b.dataset.r; render();
+});
+document.getElementById("q").addEventListener("input",e=>{
+  keyword = e.target.value.trim().toLowerCase(); render();
+});
+render();
+</script>
+</body>
+</html>
