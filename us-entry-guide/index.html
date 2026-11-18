@@ -69,6 +69,21 @@ section{padding:36px 0 8px}
 .alert.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
 .alert p{color:inherit}
 
+/* 세관신고서 샘플 */
+.form{background:var(--card);border:2px solid var(--navy);border-radius:12px;overflow:hidden;font-size:.9rem}
+.form-head{background:var(--navy);color:var(--bg);font-weight:800;padding:10px 14px;letter-spacing:.02em;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.form-head small{font-weight:600;font-size:.74rem;opacity:.85}
+.f-row,.f-q{display:grid;grid-template-columns:30px 1fr;gap:8px;padding:10px 12px;border-top:1px solid var(--line);align-items:start}
+.f-row>i,.f-q>i{font-style:normal;font-weight:800;color:var(--rose);background:var(--rose-soft);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:.78rem}
+.f-cell label{display:block;font-size:.72rem;color:var(--sub);margin-bottom:3px;line-height:1.35}
+.fill{display:block;font-family:"Courier New",ui-monospace,monospace;font-weight:700;color:#1b4fbf;border-bottom:1.5px dashed var(--rose);padding:2px 0;word-break:break-all}
+@media (prefers-color-scheme:dark){.fill{color:#8db4ff}}
+.f-q b{font-weight:700}
+.qs{list-style:none;padding:0!important;margin-top:6px}
+.qs li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px dotted var(--line);font-size:.85rem}
+.yn{flex:none;white-space:nowrap;font-weight:700;color:var(--ink);font-family:ui-monospace,monospace;font-size:.78rem}
+.f-q>div .yn{margin-left:6px}
+
 /* TIMELINE (prep) */
 .prep{list-style:none;display:grid;gap:10px}
 .prep li{display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:start}
@@ -331,6 +346,39 @@ footer{padding:12px 0 24px;text-align:center;font-size:.8rem;color:var(--sub)}
   </div>
   <div class="alert warn"><b>🌺 하와이는 더 엄격해요</b>
     <p>하와이는 농산물 검역이 특히 까다로워요. 하와이에서 본토로 이동할 때도 검사를 받을 수 있어요.</p></div>
+
+  <!-- 세관신고서 작성 샘플 -->
+  <h3 style="margin:28px 0 6px">📝 세관신고서 이렇게 써요</h3>
+  <p class="lead">신랑·신부는 <b>한 장</b>만 작성해요. 영어 대문자로, 검은색·파란색 펜을 사용하세요.</p>
+  <div class="form" role="img" aria-label="세관신고서 작성 예시">
+    <div class="form-head">U.S. CUSTOMS DECLARATION <small>작성 예시 (참고용)</small></div>
+    <div class="f-row"><i>1</i><div class="f-cell"><label>Family Name / First (Given) / Middle</label><span class="fill">HONG / GILDONG / –</span></div></div>
+    <div class="f-row"><i>2</i><div class="f-cell"><label>Birth Date (월 / 일 / 년)</label><span class="fill">05 / 12 / 1990</span></div></div>
+    <div class="f-row"><i>3</i><div class="f-cell"><label>Number of family members traveling with you</label><span class="fill">1</span></div></div>
+    <div class="f-row"><i>4</i><div class="f-cell"><label>U.S. Street Address (hotel name)</label><span class="fill">HILTON HAWAIIAN VILLAGE, HONOLULU, HI</span></div></div>
+    <div class="f-row"><i>5</i><div class="f-cell"><label>Passport Number / Country of Issuance / Residence</label><span class="fill">M12345678 / KOREA / KOREA</span></div></div>
+    <div class="f-row"><i>6</i><div class="f-cell"><label>Countries visited in last 14 days</label><span class="fill">NONE (or country name)</span></div></div>
+    <div class="f-row"><i>7</i><div class="f-cell"><label>Airline / Flight No.</label><span class="fill">KE 001</span></div></div>
+    <div class="f-q"><i>8</i><div>
+      <b>I am (we are) bringing</b>
+      <ul class="qs">
+        <li>(a) 과일·채소·식물·씨앗·식품·곤충 <span class="yn">□ Yes ☑ No</span></li>
+        <li>(b) 육류·동물 제품 <span class="yn">□ Yes ☑ No</span></li>
+        <li>(c) 질병 병원체·세포 배양·달팽이 <span class="yn">□ Yes ☑ No</span></li>
+        <li>(d) 흙, 또는 농장·목장 방문 <span class="yn">□ Yes ☑ No</span></li>
+        <li>(e) 가축과 접촉 <span class="yn">□ Yes ☑ No</span></li>
+      </ul></div></div>
+    <div class="f-q"><i>9</i><div><b>현금·유가증권 합산 1만 달러 이상</b> <span class="yn">□ Yes ☑ No</span></div></div>
+    <div class="f-q"><i>10</i><div><b>상업용 물품 (판매용 샘플 등)</b> <span class="yn">□ Yes ☑ No</span></div></div>
+    <div class="f-q"><i>11</i><div><b>Total value of goods (선물 등)</b> <span class="fill">US $ 0 (선물이 있으면 금액)</span></div></div>
+    <div class="f-row"><i>12</i><div class="f-cell"><label>Signature / Date</label><span class="fill">(서명) / 11 / 18 / 2026</span></div></div>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    <div class="alert warn"><b>⚠️ 자주 하는 실수</b>
+      <p>생년월일을 한국식(년/월/일)으로 쓰거나, 서명을 빠뜨리거나, 컵라면 스프(육류)를 보고 No로 체크하는 경우예요. 애매하면 <b>Yes</b>로 체크하고 직접 보여주세요.</p></div>
+    <div class="alert ok"><b>✔ 작성 팁</b>
+      <p>숙소 주소와 항공편명은 휴대폰에 캡처해두고 보면서 쓰세요. 항목 번호는 실제 양식과 다를 수 있어요. 실제 양식의 안내가 우선이에요.</p></div>
+  </div>
 </section>
 
 <!-- 허니문 팁 -->
