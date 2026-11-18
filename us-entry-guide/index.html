@@ -84,6 +84,22 @@ section{padding:36px 0 8px}
 .yn{flex:none;white-space:nowrap;font-weight:700;color:var(--ink);font-family:ui-monospace,monospace;font-size:.78rem}
 .f-q>div .yn{margin-left:6px}
 
+/* 전자 신고 키오스크 */
+.kiosk{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:thin}
+.k-card{flex:0 0 74%;max-width:260px;scroll-snap-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;position:relative}
+.k-n{position:absolute;top:-8px;left:-6px;width:28px;height:28px;border-radius:50%;background:var(--rose);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;z-index:1}
+.k-screen{background:#14213d;color:#fff;border-radius:10px;border:3px solid #2c3a5e;min-height:150px;padding:10px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;font-size:.8rem}
+.k-screen b{font-size:.85rem;color:#ffd98a;letter-spacing:.02em}
+.k-screen small{color:#c9d2ea}
+.k-ic{font-size:2.2rem;line-height:1}
+.k-btn{width:80%;padding:7px;border-radius:8px;background:#2c3a5e;font-weight:700}
+.k-btn.on{background:var(--gold);color:#2a2113}
+.k-row{width:100%;display:flex;justify-content:space-between;background:#24335a;border-radius:6px;padding:5px 8px;font-size:.76rem}
+.k-row span{font-weight:800;color:#ffd98a}
+.k-card h4{margin:10px 0 2px;font-size:1rem}
+.k-card p{font-size:.88rem}
+@media (min-width:720px){.kiosk{margin:0}.k-card{flex:1 1 0;max-width:none}}
+
 /* TIMELINE (prep) */
 .prep{list-style:none;display:grid;gap:10px}
 .prep li{display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:start}
@@ -378,6 +394,38 @@ footer{padding:12px 0 24px;text-align:center;font-size:.8rem;color:var(--sub)}
       <p>생년월일을 한국식(년/월/일)으로 쓰거나, 서명을 빠뜨리거나, 컵라면 스프(육류)를 보고 No로 체크하는 경우예요. 애매하면 <b>Yes</b>로 체크하고 직접 보여주세요.</p></div>
     <div class="alert ok"><b>✔ 작성 팁</b>
       <p>숙소 주소와 항공편명은 휴대폰에 캡처해두고 보면서 쓰세요. 항목 번호는 실제 양식과 다를 수 있어요. 실제 양식의 안내가 우선이에요.</p></div>
+  </div>
+
+  <!-- 전자 신고(키오스크) 안내 -->
+  <h3 style="margin:32px 0 6px">🖥 종이 대신 '전자 신고'라면</h3>
+  <p class="lead">일부 공항에서는 종이 신고서 없이 <b>키오스크(자동 심사기)</b>에서 화면을 보며 신고해요. 화면을 따라 터치만 하면 돼요.</p>
+  <div class="alert ok" style="margin:0 0 12px"><b>✔ 이런 공항에서 만날 수 있어요</b>
+    <p>도입 공항·이용 가능 여부는 공항마다 달라요. 기내 안내방송과 현장 표지판("Automated Passport Control" 등)을 확인하세요.</p></div>
+  <div class="kiosk" tabindex="0" aria-label="키오스크 화면 순서 예시, 옆으로 넘겨보세요">
+    <div class="k-card"><div class="k-n">1</div>
+      <div class="k-screen"><b>Language</b><div class="k-btn on">한국어</div><div class="k-btn">English</div></div>
+      <h4>언어 선택</h4><p>화면에서 <b>한국어</b>를 눌러요.</p></div>
+    <div class="k-card"><div class="k-n">2</div>
+      <div class="k-screen"><b>Scan Passport</b><div class="k-ic">🛂</div><small>여권 사진면을 아래로</small></div>
+      <h4>여권 스캔</h4><p>사진이 있는 면을 스캐너에 올려요.</p></div>
+    <div class="k-card"><div class="k-n">3</div>
+      <div class="k-screen"><b>Take Photo</b><div class="k-ic">🙂</div><small>정면을 바라보세요</small></div>
+      <h4>얼굴 촬영</h4><p>모자·마스크·선글라스는 벗고 카메라를 봐요.</p></div>
+    <div class="k-card"><div class="k-n">4</div>
+      <div class="k-screen"><b>Customs Questions</b><div class="k-row">식품·식물 <span>No</span></div><div class="k-row">육류 <span>No</span></div><div class="k-row">현금 1만$↑ <span>No</span></div></div>
+      <h4>질문에 답하기</h4><p>종이 신고서와 같은 질문이에요. <b>해당되면 Yes</b>를 눌러요.</p></div>
+    <div class="k-card"><div class="k-n">5</div>
+      <div class="k-screen"><b>Receipt</b><div class="k-ic">🧾</div><small>영수증을 받아가세요</small></div>
+      <h4>영수증 받기</h4><p>출력된 영수증을 들고 <b>심사관에게 제출</b>해요.</p></div>
+  </div>
+  <p class="small" style="margin-top:8px">← 옆으로 넘겨보세요 · 예시 화면이며 실제 화면과 순서는 공항·시기에 따라 달라요.</p>
+  <div class="grid" style="margin-top:12px">
+    <div class="card"><h3>👫 부부는 어떻게?</h3>
+      <p style="margin-top:4px">공항에 따라 <b>한 사람씩</b> 하거나 <b>가족 단위</b>로 해요. 화면의 "동반 가족" 선택지를 확인하세요.</p></div>
+    <div class="alert warn"><b>⚠️ 영수증에 X 표시가 있거나 안내가 나오면</b>
+      <p>당황하지 말고 줄을 서 있는 직원에게 알려주세요. 추가 확인을 받는 것이니 문제가 아니에요.</p></div>
+    <div class="alert warn"><b>⚠️ 한 가지 주의</b>
+      <p>전자 신고도 <b>종이와 똑같이 정직하게</b> 답해야 해요. 라면 스프(육류)처럼 애매하면 Yes를 누르세요.</p></div>
   </div>
 </section>
 
