@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>미국 입국, 이것만 알면 쉬워요 | 아일항공여행사 허니문</title>
+<meta name="description" content="허니문 고객을 위한 미국 입국 준비·입국 순서·심사 대화 가이드">
+<!-- 시안(v0.1) / 게시 전 [확인 필요] 항목: ESTA 비용·유효기간, 전자 세관신고 공항별 현황, 괌 규정, 영사관 연락처, 상담 링크 -->
+<style>
+:root{
+  --bg:#fbf8f3; --card:#ffffff; --ink:#1f2a44; --sub:#5b6478; --line:#ece4d8;
+  --navy:#1f2a44; --rose:#b8806a; --rose-soft:#f6e9e2; --gold:#c9a66b;
+  --warn:#b3392f; --warn-bg:#fdeeec; --ok:#2f7d5b; --ok-bg:#e9f5ee;
+  --radius:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#141826;--card:#1d2336;--ink:#f1ece4;--sub:#a9b0c2;--line:#2e3650;
+    --rose:#e0a58e;--rose-soft:#2a2530;--warn-bg:#35201f;--warn:#ff9c92;--ok-bg:#1b2e27;--ok:#7fd1a8;--navy:#e6dccb}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px;word-break:keep-all;overflow-wrap:break-word;-webkit-text-size-adjust:100%;
+  padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+h1,h2,h3{line-height:1.35;letter-spacing:-.02em}
+h2{font-size:1.4rem;margin-bottom:6px}
+h3{font-size:1.05rem}
+p{color:var(--sub)}
+section{padding:36px 0 8px}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.08em;color:var(--rose);margin-bottom:6px}
+.lead{margin-bottom:16px}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#1f2a44 0%,#33426b 60%,#7a5a58 130%);color:#fff;padding:44px 0 36px}
+.hero p{color:#e5e8f2}
+.hero h1{font-size:1.85rem;margin:10px 0 10px}
+.badge{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  padding:4px 12px;border-radius:999px;font-size:.8rem}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 20px;
+  border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:inherit}
+.btn-primary{background:var(--gold);color:#2a2113}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav ul{display:flex;gap:8px;overflow-x:auto;list-style:none;padding:10px 16px;max-width:720px;margin:0 auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:.9rem;font-weight:600;
+  padding:7px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);display:block}
+.nav a.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+  box-shadow:0 2px 10px rgba(31,42,68,.05)}
+.grid{display:grid;gap:12px}
+.sum{grid-template-columns:1fr 1fr}
+.sum .card{padding:14px}
+.sum .ic{font-size:1.5rem}
+.sum b{display:block;margin:4px 0 2px;font-size:.98rem}
+.sum span{font-size:.85rem;color:var(--sub);line-height:1.45;display:block}
+.sum .wide{grid-column:1/-1}
+
+.alert{border-radius:12px;padding:12px 14px;font-size:.92rem;margin-top:12px;border:1.5px dashed}
+.alert.warn{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.alert.warn b{color:var(--warn)}
+.alert.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.alert p{color:inherit}
+
+/* TIMELINE (prep) */
+.prep{list-style:none;display:grid;gap:10px}
+.prep li{display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:start}
+.prep .when{background:var(--rose-soft);color:var(--rose);font-weight:800;font-size:.85rem;text-align:center;
+  padding:8px 4px;border-radius:12px}
+.prep .what{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.95rem}
+
+/* CHECKLIST */
+.check label{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:.98rem}
+.check label:last-of-type{border-bottom:0}
+.check input{width:24px;height:24px;flex:none;accent-color:var(--rose);margin-top:2px}
+.check input:checked+span{text-decoration:line-through;color:var(--sub)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 4px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--rose));transition:width .3s}
+.small{font-size:.82rem;color:var(--sub)}
+
+/* STEPPER (entry flow) */
+.steps{list-style:none;position:relative;margin-top:8px}
+.steps::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.steps li{position:relative;padding:0 0 16px 56px}
+.steps .n{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;background:var(--navy);
+  color:var(--bg);font-weight:800;display:flex;align-items:center;justify-content:center;border:4px solid var(--bg)}
+.steps .card{padding:14px 16px}
+.steps .place{font-size:.78rem;font-weight:700;color:var(--rose);letter-spacing:.04em}
+.steps h3{margin:2px 0 6px}
+.steps p{font-size:.93rem}
+.tip{margin-top:8px;background:var(--rose-soft);border-radius:10px;padding:8px 12px;font-size:.88rem;color:var(--ink)}
+.tip::before{content:"💡 "}
+
+/* PHRASES */
+.phrase{display:grid;gap:10px}
+.q{font-size:.85rem;color:var(--sub);font-weight:600}
+.q::before{content:"🛂 심사관 · ";}
+.a{font-size:1.15rem;font-weight:800;color:var(--navy)}
+.pron{font-size:.9rem;color:var(--rose);font-weight:600}
+.phrase .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-end}
+.copy{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg);
+  color:var(--ink);font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit}
+.copy.done{background:var(--ok-bg);color:var(--ok);border-color:var(--ok)}
+
+/* CUSTOMS */
+.cols{grid-template-columns:1fr}
+.badge-r{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:800;margin-bottom:6px}
+.no{background:var(--warn-bg);color:var(--warn)}
+.dec{background:#fff3d6;color:#8a5b00}
+.yes{background:var(--ok-bg);color:var(--ok)}
+.card ul{padding-left:18px;color:var(--sub);font-size:.93rem}
+.card ul li{margin:3px 0}
+
+/* HONEYMOON TIPS */
+.hm{display:grid;gap:12px}
+.hm .card{display:grid;grid-template-columns:44px 1fr;gap:12px}
+.hm .ic{font-size:1.8rem;line-height:1}
+.hm h3{margin-bottom:2px}
+.hm p{font-size:.92rem}
+
+/* FAQ */
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:15px 44px 15px 16px;font-weight:700;position:relative;min-height:52px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--rose);font-weight:400}
+details[open] summary::after{content:"–"}
+details .body{padding:0 16px 16px;font-size:.94rem;color:var(--sub)}
+
+/* TROUBLE */
+.trouble{display:grid;gap:10px}
+.trouble .card{padding:14px 16px}
+.trouble b{display:block;margin-bottom:2px}
+.trouble p{font-size:.92rem}
+
+/* FOOT */
+.disclaimer{margin:28px 0 12px;font-size:.8rem;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+footer{padding:12px 0 24px;text-align:center;font-size:.8rem;color:var(--sub)}
+
+/* STICKY CTA */
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+.cta .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 52px;gap:8px}
+.cta .btn{min-height:48px;padding:0 10px;font-size:.95rem}
+.b-kakao{background:#fee500;color:#2b2200}
+.b-tel{background:var(--navy);color:var(--bg)}
+.b-pdf{background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:0}
+
+@media (min-width:720px){
+  .hero h1{font-size:2.3rem}
+  .sum{grid-template-columns:repeat(3,1fr)}
+  .sum .wide{grid-column:auto}
+  .cols{grid-template-columns:repeat(3,1fr)}
+  .hm{grid-template-columns:1fr 1fr}
+}
+@media print{
+  .nav,.cta,.btn-row,.copy{display:none!important}
+  body{padding:0;background:#fff;color:#000}
+  .hero{background:#fff;color:#000;padding:10px 0}.hero p{color:#333}
+  details{break-inside:avoid} details .body{display:block}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">💍 허니문 고객 전용 안내</span>
+    <h1>미국 입국,<br>이것만 알면 쉬워요</h1>
+    <p>공항에서 당황하지 않도록, 준비부터 입국 순서까지<br>한 페이지에 쉽게 정리했어요.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#flow">입국 순서 보기</a>
+      <a class="btn btn-ghost" href="#prep">출발 전 체크리스트</a>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="목차">
+  <ul id="navlist">
+    <li><a href="#summary">요약</a></li>
+    <li><a href="#prep">준비</a></li>
+    <li><a href="#esta">ESTA</a></li>
+    <li><a href="#flow">입국순서</a></li>
+    <li><a href="#talk">심사 대화</a></li>
+    <li><a href="#customs">세관</a></li>
+    <li><a href="#honeymoon">허니문 팁</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+<!-- 요약 -->
+<section id="summary">
+  <span class="eyebrow">30초 요약</span>
+  <h2>이 5가지만 기억하세요</h2>
+  <p class="lead">나머지는 아래에서 천천히 확인하셔도 괜찮아요.</p>
+  <div class="grid sum">
+    <div class="card"><div class="ic">🛂</div><b>여권 확인</b><span>전자여권인지, 유효기간이 충분한지 확인해요.</span></div>
+    <div class="card"><div class="ic">📝</div><b>ESTA 승인</b><span>출발 전 온라인 신청이 필요해요. 두 분 각자 신청해요.</span></div>
+    <div class="card"><div class="ic">🧾</div><b>예약서 준비</b><span>돌아오는 항공권과 숙소 주소를 휴대폰에 저장해요.</span></div>
+    <div class="card"><div class="ic">🍎</div><b>음식 반입 주의</b><span>생과일·육류·씨앗류는 가져갈 수 없어요.</span></div>
+    <div class="card wide"><div class="ic">📱</div><b>캡처 저장</b><span>ESTA 승인 화면, 항공권, 숙소 예약서를 사진으로 저장하면 인터넷이 없어도 바로 보여드릴 수 있어요.</span></div>
+  </div>
+</section>
+
+<!-- 준비 -->
+<section id="prep">
+  <span class="eyebrow">STEP 1 · 출발 전</span>
+  <h2>언제, 무엇을 준비할까요?</h2>
+  <p class="lead">시기별로 하나씩 챙기면 충분해요.</p>
+  <ul class="prep">
+    <li><div class="when">D-30</div><div class="what">여권 유효기간 확인 · <b>ESTA 신청</b> (여유 있게 미리)</div></li>
+    <li><div class="when">D-7</div><div class="what">ESTA 승인 재확인 · 항공 e-티켓, 숙소 바우처 저장</div></li>
+    <li><div class="when">D-3</div><div class="what">상비약 챙기기 · 보조배터리는 기내 휴대로 규정 확인</div></li>
+    <li><div class="when">당일</div><div class="what">여권 · ESTA 승인 화면 · 숙소 주소를 마지막으로 확인</div></li>
+  </ul>
+
+  <div class="card check" style="margin-top:16px" id="checklist">
+    <h3>✅ 우리 부부 체크리스트</h3>
+    <div class="progress"><i id="bar"></i></div>
+    <p class="small" id="barText">0 / 6 완료</p>
+    <label><input type="checkbox"><span>두 사람 모두 전자여권이에요</span></label>
+    <label><input type="checkbox"><span>여권 유효기간을 확인했어요</span></label>
+    <label><input type="checkbox"><span>ESTA를 각자 신청하고 승인을 받았어요</span></label>
+    <label><input type="checkbox"><span>ESTA 승인 화면을 저장했어요</span></label>
+    <label><input type="checkbox"><span>돌아오는 항공권·숙소 예약서를 저장했어요</span></label>
+    <label><input type="checkbox"><span>상비약·반입 금지 음식을 확인했어요</span></label>
+    <p class="small" style="margin-top:8px">체크 상태는 이 기기에 저장돼요.</p>
+  </div>
+</section>
+
+<!-- ESTA -->
+<section id="esta">
+  <span class="eyebrow">STEP 2 · 필수 준비</span>
+  <h2>ESTA, 쉽게 설명해드려요</h2>
+  <p class="lead">비자 없이 미국을 여행하기 위한 <b>온라인 사전 여행허가</b>예요.</p>
+  <div class="card">
+    <h3>신청 전에 준비하세요</h3>
+    <ul style="margin-top:8px">
+      <li>전자여권 (사진이 있는 페이지)</li>
+      <li>이메일 주소, 결제 카드</li>
+      <li>미국 첫 숙소 이름과 주소</li>
+    </ul>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:14px">
+      <div class="tip" style="margin:0">💳 비용<br><b>공식 사이트에서 최신 금액 확인</b></div>
+      <div class="tip" style="margin:0">📅 유효기간<br><b>공식 사이트에서 확인</b></div>
+    </div>
+  </div>
+  <div class="alert warn"><b>⚠️ 사칭 사이트를 조심하세요</b>
+    <p>검색 결과 상단의 "대행" 사이트는 높은 수수료를 받을 수 있어요. 반드시 <b>미국 국토안보부(CBP) 공식 ESTA 사이트</b>에서 직접 신청하세요.</p></div>
+  <div class="alert warn"><b>⚠️ 이름·여권번호 오타 주의</b>
+    <p>한 글자만 달라도 탑승이 어려울 수 있어요. 신청 후 승인서를 꼭 저장해주세요.</p></div>
+</section>
+
+<!-- 입국 순서 -->
+<section id="flow">
+  <span class="eyebrow">STEP 3 · 공항에서</span>
+  <h2>입국 순서, 7단계</h2>
+  <p class="lead">따라가기만 하면 돼요. 공항마다 표지판이 조금씩 달라요. 현장 안내판을 우선 확인하세요.</p>
+  <ol class="steps">
+    <li><span class="n">1</span><div class="card"><div class="place">기내</div><h3>세관신고서 작성</h3>
+      <p>승무원이 나눠주는 신고서를 작성해요. 가족·부부는 한 장으로 가능한 경우가 있어요.</p>
+      <div class="tip">미리 작성하면 줄이 훨씬 빨리 줄어요.</div></div></li>
+    <li><span class="n">2</span><div class="card"><div class="place">도착</div><h3>입국심사장으로 이동</h3>
+      <p><b>Arrivals / Immigration</b> 표지를 따라 이동해요. 환승이면 <b>Connecting Flights</b>를 따라가세요.</p></div></li>
+    <li><span class="n">3</span><div class="card"><div class="place">입국심사</div><h3>여권 제출 · 사진 · 지문</h3>
+      <p>여권을 드리고 사진과 지문을 등록해요. 간단한 질문에 짧게 답하면 끝나요.</p>
+      <div class="tip">신랑·신부가 <b>함께</b> 같은 창구로 가면 편해요.</div></div></li>
+    <li><span class="n">4</span><div class="card"><div class="place">수하물</div><h3>짐 찾기</h3>
+      <p>전광판에서 항공편명을 확인하고 해당 벨트에서 짐을 찾아요.</p></div></li>
+    <li><span class="n">5</span><div class="card"><div class="place">세관</div><h3>세관 통과</h3>
+      <p>신고할 물건이 없으면 신고서를 제출하고 통과해요. 신고할 물건이 있으면 솔직하게 알려주세요.</p>
+      <div class="tip">애매하면 "신고(Declare)"가 가장 안전해요.</div></div></li>
+    <li><span class="n">6</span><div class="card"><div class="place">경유 시</div><h3>짐 다시 부치기</h3>
+      <p>미국에서 갈아타는 경우 짐을 찾아 다시 맡기고, <b>보안검색을 한 번 더</b> 받아요.</p>
+      <div class="tip">환승 시간은 넉넉히 3시간 이상을 권해요.</div></div></li>
+    <li><span class="n">7</span><div class="card"><div class="place">출구</div><h3>픽업 · 택시 · 렌터카</h3>
+      <p>미팅 장소와 숙소 주소를 미리 캡처해두면 편해요. 첫 신혼여행, 즐거운 시작이에요! 🥂</p></div></li>
+  </ol>
+</section>
+
+<!-- 심사 대화 -->
+<section id="talk">
+  <span class="eyebrow">STEP 4 · 입국심사</span>
+  <h2>이렇게 답하면 돼요</h2>
+  <p class="lead">길게 말하지 않아도 괜찮아요. 짧고 정확하게, 웃으며 답해주세요.</p>
+  <div class="grid">
+    <div class="card phrase"><div class="q">What's the purpose of your visit?</div>
+      <div class="row"><div><div class="a">Honeymoon.</div><div class="pron">허니문</div></div>
+      <button class="copy" data-t="Honeymoon.">복사</button></div></div>
+    <div class="card phrase"><div class="q">How long will you stay?</div>
+      <div class="row"><div><div class="a">Seven days.</div><div class="pron">세븐 데이즈 (※ 실제 일정 일수로)</div></div>
+      <button class="copy" data-t="Seven days.">복사</button></div></div>
+    <div class="card phrase"><div class="q">Where will you stay?</div>
+      <div class="row"><div><div class="a">At (호텔명) in Honolulu.</div><div class="pron">앳 (호텔명) 인 호놀룰루</div></div>
+      <button class="copy" data-t="At (hotel name) in Honolulu.">복사</button></div></div>
+    <div class="card phrase"><div class="q">Do you have a return ticket?</div>
+      <div class="row"><div><div class="a">Yes.</div><div class="pron">예스</div></div>
+      <button class="copy" data-t="Yes.">복사</button></div></div>
+    <div class="card phrase"><div class="q">Are you traveling together?</div>
+      <div class="row"><div><div class="a">Yes, with my wife / husband.</div><div class="pron">예스, 위드 마이 와이프 / 허즈번드</div></div>
+      <button class="copy" data-t="Yes, with my wife.">복사</button></div></div>
+    <div class="card phrase"><div class="q">못 알아들었을 때</div>
+      <div class="row"><div><div class="a">Sorry, could you repeat?</div><div class="pron">쏘리, 쿠쥬 리핏?</div></div>
+      <button class="copy" data-t="Sorry, could you repeat?">복사</button></div></div>
+  </div>
+  <div class="alert ok"><b>✔ 이것만 지켜주세요</b>
+    <p>질문에 정직하게, 간단하게 답하세요. 예약서는 바로 꺼낼 수 있게 준비해요. 현지에서 일하거나 상업 촬영을 할 계획이 있다면 출발 전 꼭 상담해주세요.</p></div>
+</section>
+
+<!-- 세관 -->
+<section id="customs">
+  <span class="eyebrow">STEP 5 · 세관</span>
+  <h2>가져가도 될까요?</h2>
+  <p class="lead">특히 음식물이 가장 많이 문제돼요.</p>
+  <div class="grid cols">
+    <div class="card"><span class="badge-r no">가져갈 수 없어요</span>
+      <ul><li>생과일·채소</li><li>육류·육가공품 (컵라면 스프, 육포 등)</li><li>씨앗·식물·흙</li></ul></div>
+    <div class="card"><span class="badge-r dec">꼭 신고하세요</span>
+      <ul><li>현금 등 합산 1만 달러 이상</li><li>고가 물품, 판매용 샘플</li><li>한도를 넘는 술·담배</li></ul></div>
+    <div class="card"><span class="badge-r yes">이렇게 준비하세요</span>
+      <ul><li>약은 원래 포장 그대로</li><li>처방약은 영문 처방 안내 지참</li><li>선물은 개인 용도 범위로</li></ul></div>
+  </div>
+  <div class="alert warn"><b>🌺 하와이는 더 엄격해요</b>
+    <p>하와이는 농산물 검역이 특히 까다로워요. 하와이에서 본토로 이동할 때도 검사를 받을 수 있어요.</p></div>
+</section>
+
+<!-- 허니문 팁 -->
+<section id="honeymoon">
+  <span class="eyebrow">HONEYMOON TIP</span>
+  <h2>허니문이라서 더 알아두세요</h2>
+  <div class="hm" style="margin-top:12px">
+    <div class="card"><div class="ic">🏝</div><div><h3>하와이</h3><p>직항으로 호놀룰루에 도착하면 그곳에서 입국심사를 해요. 이웃섬은 국내선으로 이동해요.</p></div></div>
+    <div class="card"><div class="ic">✈️</div><div><h3>미국 경유 · 칸쿤 등</h3><p><b>미국에서 갈아타기만 해도 ESTA가 필요해요.</b> 연결편 시간을 넉넉히 잡아주세요.</p></div></div>
+    <div class="card"><div class="ic">📸</div><div><h3>웨딩 촬영 · 드레스</h3><p>개인 기념 촬영은 괜찮지만, 상업 촬영으로 오해받지 않게 "personal use"로 설명해요.</p></div></div>
+    <div class="card"><div class="ic">🎁</div><div><h3>선물 · 기념품</h3><p>개인 선물 범위라면 괜찮아요. 고가품이나 식품은 미리 확인해주세요.</p></div></div>
+  </div>
+</section>
+
+<!-- 돌발상황 -->
+<section id="trouble">
+  <span class="eyebrow">이럴 땐</span>
+  <h2>당황하지 않아도 괜찮아요</h2>
+  <div class="trouble" style="margin-top:12px">
+    <div class="card"><b>줄이 너무 길어요</b><p>연결편 시간이 촉박하면 항공사 직원에게 알려주세요.</p></div>
+    <div class="card"><b>추가 질문(2차 심사)을 받았어요</b><p>드문 일은 아니에요. 침착하게 공손히 답하고, 필요하면 아래 비상 연락처로 연락주세요.</p></div>
+    <div class="card"><b>짐이 나오지 않아요</b><p>수하물 서비스 카운터에서 분실 신고를 먼저 하고, 접수증을 보관해주세요.</p></div>
+    <div class="card"><b>연결편을 놓쳤어요</b><p>항공사 카운터에서 재예약을 요청하세요. 아일항공여행사에도 바로 알려주세요.</p></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <span class="eyebrow">FAQ</span>
+  <h2>자주 묻는 질문</h2>
+  <div style="margin-top:12px">
+    <details><summary>ESTA는 꼭 해야 하나요?</summary><div class="body">네. 비자 없이 가는 경우 출발 전 승인이 필요하고, 미국에서 <b>경유만 해도</b> 필요해요.</div></details>
+    <details><summary>신랑·신부가 함께 신청할 수 있나요?</summary><div class="body">한 분이 대신 입력할 수 있지만, 각자 여권 정보로 <b>따로</b> 신청해야 해요.</div></details>
+    <details><summary>영어를 못해도 괜찮을까요?</summary><div class="body">괜찮아요. 위의 짧은 답변과 예약서를 보여드리면 대부분 문제없이 통과해요.</div></details>
+    <details><summary>공항에서 인터넷이 안 되면요?</summary><div class="body">ESTA 승인 화면, 항공권, 숙소 예약서를 <b>사진으로 저장</b>해두세요. 이 페이지도 PDF로 저장할 수 있어요.</div></details>
+    <details><summary>한국 음식을 가져가도 되나요?</summary><div class="body">육류·과일·채소류는 어렵고, 가공식품도 성분에 따라 달라요. 애매하면 신고하거나 가져가지 않는 편이 안전해요.</div></details>
+    <details><summary>약을 가져가도 되나요?</summary><div class="body">원래 포장 그대로, 처방약은 영문 처방 안내를 챙겨주세요.</div></details>
+    <details><summary>보조배터리는 어떻게 가져가나요?</summary><div class="body">위탁수하물이 아닌 <b>기내 휴대</b>가 원칙이에요. 사용 규정은 항공사별로 달라 출발 전 확인해주세요.</div></details>
+    <details><summary>ESTA가 거절되면요?</summary><div class="body">비자 신청이 필요하고 시간이 오래 걸려요. 바로 담당자에게 연락주세요.</div></details>
+  </div>
+</section>
+
+<div class="disclaimer">
+  본 안내는 일반 가이드이며 미국 정부 규정은 수시로 바뀔 수 있습니다. 출발 전 <b>미국 국토안보부(CBP)·주한 미국대사관 공식 사이트</b>에서 최종 확인해주세요.<br>
+  <span id="updated">최종 업데이트: 2026-11-18</span>
+</div>
+</main>
+
+<footer><div class="wrap">(주)아일항공여행사 · 허니문 전문 · 아름다운 시작을 함께합니다</div></footer>
+
+<div class="cta"><div class="in">
+  <!-- [확인 필요] 실제 상담 링크/번호로 교체 -->
+  <a class="btn b-kakao" href="#" aria-label="카카오톡 상담">💬 카톡 상담</a>
+  <a class="btn b-tel" href="tel:" aria-label="전화 상담">📞 전화 상담</a>
+  <button class="btn b-pdf" id="pdf" aria-label="PDF로 저장">⬇</button>
+</div></div>
+
+<script>
+(function(){
+  // 체크리스트 (저장 실패해도 동작)
+  var boxes=[].slice.call(document.querySelectorAll('#checklist input'));
+  var KEY='us-entry-check-v1', saved=[];
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+  boxes.forEach(function(b,i){b.checked=!!saved[i];b.addEventListener('change',update)});
+  function update(){
+    var s=boxes.map(function(b){return b.checked}), n=s.filter(Boolean).length;
+    document.getElementById('bar').style.width=(n/boxes.length*100)+'%';
+    document.getElementById('barText').textContent=n+' / '+boxes.length+' 완료'+(n===boxes.length?' 🎉 준비 끝!':'');
+    try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}
+  }
+  update();
+
+  // 문구 복사
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var t=btn.getAttribute('data-t');
+      function ok(){btn.textContent='복사됨';btn.classList.add('done');
+        setTimeout(function(){btn.textContent='복사';btn.classList.remove('done')},1400)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,ok)}else{ok()}
+    });
+  });
+
+  // PDF 저장 (인쇄 → PDF)
+  document.getElementById('pdf').addEventListener('click',function(){
+    document.querySelectorAll('details').forEach(function(d){d.open=true});
+    window.print();
+  });
+
+  // 현재 섹션 하이라이트
+  var links=[].slice.call(document.querySelectorAll('#navlist a'));
+  var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting&&map[e.target.id]){
+          links.forEach(function(l){l.classList.remove('on')});
+          map[e.target.id].classList.add('on');
+          map[e.target.id].scrollIntoView({inline:'center',block:'nearest'});
+        }
+      });
+    },{rootMargin:'-30% 0px -60% 0px'});
+    Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>
